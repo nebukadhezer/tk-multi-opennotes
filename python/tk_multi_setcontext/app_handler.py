@@ -21,14 +21,18 @@ class AppHandler(object):
 
     def show_dialog(self):
         
+        # special session handling for Nuke since nuke doesn't have a concept of
+        # (re)loading a scene - it always starts a new process when a new file
+        # is loaded.
         
-        # first make sure that this is a scene which hasn't been saved
-        if nuke.root().name() != "Root":
-            nuke.message("The set context app only works when you haven't yet opened a file. "
-                         "Go to the Nuke menu, select File, New and then run the set context "
-                         "app again from the empty scene.")
+        if self._app.engine.name == "tk-nuke":
             
-            return
+            import nuke
+            if nuke.root().name() != "Root":
+                nuke.message("This App only works when you haven't yet opened a file. "
+                             "Go to the Nuke menu, select File, New and then run the "
+                             "App again from the empty scene.")
+                return
         
         
         # do the import just before so that this app can run nicely in nuke

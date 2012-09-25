@@ -174,16 +174,14 @@ class AppDialog(QtGui.QDialog):
 
     def _clear_current_scene_maya(self):
         """
-        Clears the current scene. Does a file -> new
-        
+        Clears the current scene. Does a file -> new.
+        Maya implementation.
         returns False on cancel, true on success.
         """
         
         import pymel.core as pm
         import maya.cmds as cmds
 
-        
-        
         status = True
         
         if cmds.file(query=True, modified=True):
@@ -228,8 +226,8 @@ class AppDialog(QtGui.QDialog):
         
     def _clear_current_scene_motionbuilder(self):
         """
-        Clears the current scene. Does a file -> new
-
+        Clears the current scene. Does a file -> new.
+        Motionbuilder implementation.
         returns False on cancel, true on success.
         """
         from pyfbsdk import FBApplication
@@ -244,9 +242,11 @@ class AppDialog(QtGui.QDialog):
 
         if res == QtGui.QMessageBox.Cancel:
             status = False
+            
         elif res == QtGui.QMessageBox.No:
             # don't save!
             fb_app.FileNew()
+            
         else:
             # save before!
             fb_app.FileSave()
@@ -272,18 +272,25 @@ class AppDialog(QtGui.QDialog):
 
 
         res = QtGui.QMessageBox.question(self,
-                                         "Switch Context?",
-                                         "This will switch your Tank Environment to point to the "
+                                         "Change work area?",
+                                         "This will switch your work area to the "
                                          "selected Task. Are you sure you want to continue?",
                                          QtGui.QMessageBox.Ok|QtGui.QMessageBox.Cancel)
 
         if res == QtGui.QMessageBox.Ok:            
             
             # first clear the scene
-            if not self._clear_current_scene():
-                # return back to dialog
-                return
+            if self._app.engine.name == "tk-maya":
+                if not self._clear_current_scene_maya():
+                    # return back to dialog
+                    return
             
+            elif self._app.engine.name == "tk-motionbuilder":
+                if not self._clear_current_scene_motionbuilder():
+                    # return back to dialog
+                    return
+            # note - on nuke, we always start from a clean scene, so no need to check.
+                
             # ok scene is clear. Now switch!
             
             # Try to create path for the context.  
@@ -295,18 +302,12 @@ class AppDialog(QtGui.QDialog):
                 tank.platform.start_engine(current_engine_name, ctx.tank, ctx)
             except Exception, e:
                 QtGui.QMessageBox.critical(self, 
-                                           "Could not switch Context!", 
-                                           "Could not switch context and start a new " 
+                                           "Could not Switch!", 
+                                           "Could not change work area and start a new " 
                                            "engine. This can be because the task doesn't "
                                            "have a step. Details: %s" % e)
                 return
             
-            else:
-                QtGui.QMessageBox.information(self,
-                                              "New Context Set",
-                                              "Your context was successfully changed! "
-                                              "For details about the new context, click the Tank " 
-                                              "menu.")
             
             # close dialog
             self.done(0)
