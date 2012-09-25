@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'dialog.ui'
 #
-# Created: Thu Sep 20 14:59:18 2012
+# Created: Tue Sep 25 13:44:30 2012
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -68,10 +68,10 @@ class Ui_Dialog(object):
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
-        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Change your Work Context", None, QtGui.QApplication.UnicodeUTF8))
+        Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Change your Work Area", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("Dialog", "<b><big>Where will you be working today?</big></b>", None, QtGui.QApplication.UnicodeUTF8))
         self.new_task.setText(QtGui.QApplication.translate("Dialog", "Create New Task...", None, QtGui.QApplication.UnicodeUTF8))
-        self.change_context.setText(QtGui.QApplication.translate("Dialog", "Change Context", None, QtGui.QApplication.UnicodeUTF8))
+        self.change_context.setText(QtGui.QApplication.translate("Dialog", "Switch Work Area", None, QtGui.QApplication.UnicodeUTF8))
         self.hide_tasks.setText(QtGui.QApplication.translate("Dialog", "Show My Tasks Only", None, QtGui.QApplication.UnicodeUTF8))
 
 from ..entity_browser import EntityBrowserWidget

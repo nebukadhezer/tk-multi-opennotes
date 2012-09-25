@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Change your Work Context</string>
+   <string>Change your Work Area</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -82,7 +82,7 @@
        <item>
         <widget class="QPushButton" name="change_context">
          <property name="text">
-          <string>Change Context</string>
+          <string>Switch Work Area</string>
          </property>
         </widget>
        </item>
