@@ -1,0 +1,27 @@
+#
+# Copyright (c) 2012 Shotgun Software, Inc
+# ----------------------------------------------------
+#
+# Metadata defining the behaviour and requirements for this app
+
+# expected fields in the configuration file for this app
+configuration:
+
+    sg_entity_types:
+        type: list
+        description: "List of Shotgun Entity Types to include in the listings."
+        default_value: [Shot, Asset]
+        values:
+            type: shotgun_entity_type
+            
+    enable_create_tasks:
+        type: bool
+        description: "Controls whether new tasks can be created from the app."
+        default_value: True
+        
+# the engines that this app can operate in:
+supported_engines: [tk-nuke, tk-maya, tk-motionbuilder]
+
+# the Shotgun fields that this app needs in order to operate correctly
+requires_shotgun_fields:
+
