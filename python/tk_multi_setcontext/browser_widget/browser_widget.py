@@ -84,7 +84,7 @@ class BrowserWidget(QtGui.QWidget):
         self._worker.work_completed.connect( self._on_worker_signal)
         self._worker.work_failure.connect( self._on_worker_failure)
         
-        self._worker.start(QtCore.QThread.LowPriority)
+        self._worker.start()
         
     def set_label(self, label):
         """
