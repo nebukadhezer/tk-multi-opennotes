@@ -13,7 +13,7 @@ class SetContext(tank.platform.Application):
         """
         Called as the application is being initialized
         """
-        import tk_multi_setcontext
+        tk_multi_setcontext = self.import_module("tk_multi_setcontext")
         self.app_handler = tk_multi_setcontext.AppHandler(self)
         
         # add stuff to the context menu
