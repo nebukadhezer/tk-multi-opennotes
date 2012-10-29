@@ -295,7 +295,7 @@ class AppDialog(QtGui.QDialog):
             
             # Try to create path for the context.  
             try:
-                self._app.tank.create_filesystem_structure("Task", task_id)
+                self._app.tank.create_filesystem_structure("Task", task_id, engine=self._app.engine.name)
                 current_engine_name = self._app.engine.name            
                 if tank.platform.current_engine(): 
                     tank.platform.current_engine().destroy()
