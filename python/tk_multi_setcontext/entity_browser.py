@@ -8,11 +8,10 @@ import sys
 import threading
 
 from PySide import QtCore, QtGui
-from .browser_widget import BrowserWidget
-from .browser_widget import ListItem
-from .browser_widget import ListHeader
 
-class EntityBrowserWidget(BrowserWidget):
+browser_widget = tank.platform.import_framework("tk-framework-widget", "browser_widget")
+
+class EntityBrowserWidget(browser_widget.BrowserWidget):
 
     
     def __init__(self, parent=None):
@@ -88,10 +87,10 @@ class EntityBrowserWidget(BrowserWidget):
             return
 
         for item in result.get("data"):
-            i = self.add_item(ListHeader)
+            i = self.add_item(browser_widget.ListHeader)
             i.set_title("%ss" % item["type"])
             for d in item["data"]:
-                i = self.add_item(ListItem)
+                i = self.add_item(browser_widget.ListItem)
                 
                 details = "<b>%s %s</b><br>%s" % (d.get("type"), 
                                                   d.get("code"), 

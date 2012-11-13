@@ -8,12 +8,11 @@ import sys
 import threading
 
 from PySide import QtCore, QtGui
-from .browser_widget import BrowserWidget
-from .browser_widget import ListItem
-from .browser_widget import ListHeader
+
+browser_widget = tank.platform.import_framework("tk-framework-widget", "browser_widget")
 
 
-class TaskBrowserWidget(BrowserWidget):
+class TaskBrowserWidget(browser_widget.BrowserWidget):
 
     
     def __init__(self, parent=None):
@@ -112,10 +111,10 @@ class TaskBrowserWidget(BrowserWidget):
             self.set_message("No Tasks found for %s!" % entity_str)
             
         else:
-            i = self.add_item(ListHeader)
+            i = self.add_item(browser_widget.browser_widget)
             i.set_title("Tasks for %s" % entity_str)
             for d in tasks:
-                i = self.add_item(ListItem)
+                i = self.add_item(browser_widget.ListItem)
                 
                 details = []
                 details.append("<b>Task: %s</b>" % d.get("content", ""))
