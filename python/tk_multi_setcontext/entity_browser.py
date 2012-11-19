@@ -72,7 +72,8 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
                 item = {}
                 item["type"] = et
                 item["data"] = self._app.shotgun.find(et, 
-                                                      [ ["project", "is", self._app.context.project] ], 
+                                                      [ ["project", "is", self._app.context.project],
+                                                        ["sg_status_list", "is_not", "fin" ] ], 
                                                       ["code", "description", "image"])
                 sg_data.append(item)
             
