@@ -64,7 +64,7 @@ class AppDialog(QtGui.QDialog):
         
         # load data from shotgun
         self.setup_entity_list()
-        self.ui.right_browser.set_message("Please select an entity in the listing to the left.")        
+        self.ui.right_browser.set_message("Please select an item in the listing to the left.")        
 
         # remember state of checkbox        
         # this qsettings stuff seems super flaky on different platforms
