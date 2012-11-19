@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'new_task.ui'
 #
-# Created: Tue Sep 25 13:44:30 2012
+# Created: Mon Nov 19 15:16:22 2012
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!

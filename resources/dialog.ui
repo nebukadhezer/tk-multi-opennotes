@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>749</width>
+    <width>797</width>
     <height>546</height>
    </rect>
   </property>
@@ -41,6 +41,14 @@
       </widget>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Below is a list of Shotgun Items and their associated Tasks.
+Double click a Task to set the current work area to point at that Tank.</string>
+     </property>
+    </widget>
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout">
