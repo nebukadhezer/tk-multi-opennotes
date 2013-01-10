@@ -7,20 +7,22 @@ import os
 import sys
 import threading
 
-from PySide import QtCore, QtGui
+from tank.platform.qt import QtCore, QtGui, TankQDialog
 from .ui.dialog import Ui_Dialog
 from .new_task import NewTaskDialog
 
-
-class AppDialog(QtGui.QDialog):
+class AppDialog(TankQDialog):
 
     
-    def __init__(self, app):
-        QtGui.QDialog.__init__(self)
-        self._app = app
+    def __init__(self, parent=None):
+        TankQDialog.__init__(self, parent)
         # set up the UI
         self.ui = Ui_Dialog() 
         self.ui.setupUi(self)
+
+    def post_init(self, app):
+
+        self._app = app
         
         self._settings = QtCore.QSettings("Shotgun Software", "tk-multi-setcontext")
         
@@ -90,15 +92,15 @@ class AppDialog(QtGui.QDialog):
         
     def accept(self):
         self._cleanup()
-        QtGui.QDialog.accept(self)
+        TankQDialog.accept(self)
         
     def reject(self):
         self._cleanup()
-        QtGui.QDialog.reject(self)
+        TankQDialog.reject(self)
         
     def done(self, status):
         self._cleanup()
-        QtGui.QDialog.done(self, status)
+        TankQDialog.done(self, status)
         
     ########################################################################################
     # basic business logic

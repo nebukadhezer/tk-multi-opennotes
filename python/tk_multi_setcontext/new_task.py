@@ -7,7 +7,7 @@ import os
 import sys
 import threading
 
-from PySide import QtCore, QtGui
+from tank.platform.qt import QtCore, QtGui
 from .ui.new_task import Ui_NewTask
 
 class NewTaskDialog(QtGui.QDialog):

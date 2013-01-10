@@ -6,6 +6,7 @@ import tempfile
 import os
 import platform
 import sys
+import tank
 import uuid
 import shutil
 
@@ -40,7 +41,8 @@ class AppHandler(object):
         from .dialog import AppDialog
         # must be nice to the GC here - attach this object
         # to something we know wont go away...
-        self._dialog = AppDialog(self._app)
+        self._dialog = tank.platform.qt.create_dialog(AppDialog)
+        self._dialog.post_init(self._app)
         self._dialog.show()
         
 
