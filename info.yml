@@ -19,6 +19,11 @@ configuration:
         description: "Controls whether new tasks can be created from the app."
         default_value: True
         
+    launch_at_startup:
+        type: bool
+        description: A flag whether to launch this app's UI at startup.
+        default_value: false
+        
 # the engines that this app can operate in:
 supported_engines: [tk-nuke, tk-maya, tk-motionbuilder]
 

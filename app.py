@@ -22,3 +22,11 @@ class SetContext(tank.platform.Application):
                                      {"type": "context_menu"})
 
 
+        # only launch the dialog once at startup
+        # use tank object to store this flag
+        if not hasattr(tank, '_tk_multi_setcontext_shown'):
+            # very first time we run this app
+            tank._tk_multi_setcontext_shown = True
+            # show the UI
+            if self.get_setting('launch_at_startup'):
+                self.app_handler.show_dialog()
