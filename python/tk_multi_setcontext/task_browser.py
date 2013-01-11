@@ -111,7 +111,8 @@ class TaskBrowserWidget(browser_widget.BrowserWidget):
             self.set_message("No Tasks found for %s!" % entity_str)
             
         else:
-            i = self.add_item(browser_widget.browser_widget)
+            i = self.add_item(browser_widget.ListHeader)
+            
             i.set_title("Tasks for %s" % entity_str)
             for d in tasks:
                 i = self.add_item(browser_widget.ListItem)
