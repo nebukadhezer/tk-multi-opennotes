@@ -283,14 +283,32 @@ class AppDialog(TankQDialog):
             
             # first clear the scene
             if self._app.engine.name == "tk-maya":
+                
                 if not self._clear_current_scene_maya():
                     # return back to dialog
                     return
+            
+            elif self._app.engine.name == "tk-3dsmax":
+                
+                from Py3dsMax import mxs
+                
+                if mxs.getSaveRequired():
+                    # not an empty scene
+                    # this will ask the user if they want to reset
+                    mxs.resetMaxFile()
+                    
+                if mxs.getSaveRequired():
+                    # if save is still required, this means that the user answered No
+                    # when asked to reset. So now, exit and don't carry out the switch
+                    return
+                
             
             elif self._app.engine.name == "tk-motionbuilder":
                 if not self._clear_current_scene_motionbuilder():
                     # return back to dialog
                     return
+                
+                
             # note - on nuke, we always start from a clean scene, so no need to check.
                 
             # ok scene is clear. Now switch!
