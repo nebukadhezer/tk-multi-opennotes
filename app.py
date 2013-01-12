@@ -27,6 +27,6 @@ class SetContext(tank.platform.Application):
         if not hasattr(tank, '_tk_multi_setcontext_shown'):
             # very first time we run this app
             tank._tk_multi_setcontext_shown = True
-            # show the UI
-            if self.get_setting('launch_at_startup'):
+            # show the UI at startup, but only if engine supports a UI
+            if self.get_setting('launch_at_startup') and self.engine.has_ui:
                 self.app_handler.show_dialog()
