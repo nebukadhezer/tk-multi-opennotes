@@ -14,14 +14,11 @@ from .new_task import NewTaskDialog
 class AppDialog(TankQDialog):
 
     
-    def __init__(self, parent=None):
-        TankQDialog.__init__(self, parent)
+    def __init__(self, app):
+        TankQDialog.__init__(self)
         # set up the UI
         self.ui = Ui_Dialog() 
         self.ui.setupUi(self)
-
-    def post_init(self, app):
-
         self._app = app
         
         self._settings = QtCore.QSettings("Shotgun Software", "tk-multi-setcontext")
