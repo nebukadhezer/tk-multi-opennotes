@@ -312,7 +312,7 @@ class AppDialog(QtGui.QWidget):
             
             
             # close dialog
-            self.done(0)
+            self.close()
         
         
         
