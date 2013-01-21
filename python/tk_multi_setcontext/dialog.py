@@ -7,15 +7,15 @@ import os
 import sys
 import threading
 
-from tank.platform.qt import QtCore, QtGui, TankQDialog
+from tank.platform.qt import QtCore, QtGui
 from .ui.dialog import Ui_Dialog
 from .new_task import NewTaskDialog
 
-class AppDialog(TankQDialog):
+class AppDialog(QtGui.QWidget):
 
     
     def __init__(self, app):
-        TankQDialog.__init__(self)
+        QtGui.QWidget.__init__(self)
         # set up the UI
         self.ui = Ui_Dialog() 
         self.ui.setupUi(self)
@@ -78,26 +78,11 @@ class AppDialog(TankQDialog):
     # make sure we trap when the dialog is closed so that we can shut down 
     # our threads. Maya does not do proper cleanup on exit.
     
-    def _cleanup(self):
+    def closeEvent(self, event):
         self.ui.left_browser.destroy()
         self.ui.right_browser.destroy()
-        
-    def closeEvent(self, event):
-        self._cleanup()
         # okay to close!
         event.accept()
-        
-    def accept(self):
-        self._cleanup()
-        TankQDialog.accept(self)
-        
-    def reject(self):
-        self._cleanup()
-        TankQDialog.reject(self)
-        
-    def done(self, status):
-        self._cleanup()
-        TankQDialog.done(self, status)
         
     ########################################################################################
     # basic business logic

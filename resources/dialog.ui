@@ -19,7 +19,8 @@
      <item>
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>&lt;b&gt;&lt;big&gt;Where will you be working today?&lt;/big&gt;&lt;/b&gt;</string>
+        <string>Below is a list of Shotgun Items and their associated Tasks.
+Double click a Task to set the current work area to point at that Tank.</string>
        </property>
        <property name="wordWrap">
         <bool>true</bool>
@@ -41,14 +42,6 @@
       </widget>
      </item>
     </layout>
-   </item>
-   <item>
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Below is a list of Shotgun Items and their associated Tasks.
-Double click a Task to set the current work area to point at that Tank.</string>
-     </property>
-    </widget>
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout">

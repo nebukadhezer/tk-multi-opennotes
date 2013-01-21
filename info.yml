@@ -36,7 +36,7 @@ description: "UI which lets a user choose a task that they want to work on."
 
 # Required minimum versions for this item to run
 requires_shotgun_version:
-requires_core_version: "v0.12.5"
+requires_core_version: "v0.12.6"
 requires_engine_version:
 
 
