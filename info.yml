@@ -36,11 +36,11 @@ description: "UI which lets a user choose a task that they want to work on."
 
 # Required minimum versions for this item to run
 requires_shotgun_version:
-requires_core_version: "v0.12.6"
+requires_core_version: "v0.12.19"
 requires_engine_version:
 
 
 # the frameworks required to run this app
 frameworks:
-    - {"name": "tk-framework-widget", "version": "v0.1.4"}
+    - {"name": "tk-framework-widget", "version": "v0.1.5"}
     

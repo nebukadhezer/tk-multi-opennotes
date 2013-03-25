@@ -38,12 +38,8 @@ class AppDialog(QtGui.QWidget):
         # create 
         types_to_load = self._app.get_setting("sg_entity_types", [])
         
-        # now resolve the entity types into display names using the schema_entity_read method.
-        entity_type_lookup = self._app.tank.shotgun.schema_entity_read()
-        # returns a dictionary on the following form:
-        # { 'Booking': {'name': {'editable': False, 'value': 'Booking'}}, ... }
-        # get list of display names
-        types_nice_names = [ entity_type_lookup[x]["name"]["value"] for x in types_to_load ]
+        # now resolve the entity types into display names
+        types_nice_names = [ tank.util.get_entity_type_display_name(self._app.tank, x) for x in types_to_load ]
         
         plural_types = [ "%ss" % x for x in types_nice_names] # no fanciness (sheep, box, nucleus etc)
         if len(plural_types) == 1:
