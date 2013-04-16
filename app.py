@@ -16,7 +16,7 @@ class SetContext(tank.platform.Application):
         tk_multi_setcontext = self.import_module("tk_multi_setcontext")        
         cb = lambda : tk_multi_setcontext.show_dialog(self)
         # add stuff to the context menu
-        self.engine.register_command("set_work_area", cb, {"type": "context_menu", "title": "Set Work Area..."})
+        self.engine.register_command("Set Work Area...", cb, {"type": "context_menu"})
 
         # only launch the dialog once at startup
         # use tank object to store this flag
