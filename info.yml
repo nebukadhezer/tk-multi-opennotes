@@ -25,7 +25,7 @@ configuration:
         default_value: false
         
 # the engines that this app can operate in:
-supported_engines: [tk-nuke, tk-maya, tk-motionbuilder, tk-3dsmax, tk-photoshop]
+supported_engines: [tk-nuke, tk-maya, tk-motionbuilder, tk-3dsmax, tk-photoshop, tk-hiero]
 
 # the Shotgun fields that this app needs in order to operate correctly
 requires_shotgun_fields:
