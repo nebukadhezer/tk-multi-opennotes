@@ -20,7 +20,7 @@
       <widget class="QLabel" name="label_3">
        <property name="text">
         <string>Below is a list of Shotgun Items and their associated Tasks.
-Double click a Task to set the current work area to point at that Tank.</string>
+Double click a Task to set the current Work Area to point at it.</string>
        </property>
        <property name="wordWrap">
         <bool>true</bool>

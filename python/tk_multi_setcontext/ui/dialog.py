@@ -2,7 +2,6 @@
 
 # Form implementation generated from reading ui file 'dialog.ui'
 #
-# Created: Mon Jan 21 00:17:30 2013
 #      by: pyside-uic 0.2.13 running on PySide 1.1.0
 #
 # WARNING! All changes made in this file will be lost!
@@ -70,7 +69,7 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Change your Work Area", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("Dialog", "Below is a list of Shotgun Items and their associated Tasks.\n"
-"Double click a Task to set the current work area to point at that Tank.", None, QtGui.QApplication.UnicodeUTF8))
+"Double click a Task to set the current Work Area to point at it.", None, QtGui.QApplication.UnicodeUTF8))
         self.new_task.setText(QtGui.QApplication.translate("Dialog", "Create New Task...", None, QtGui.QApplication.UnicodeUTF8))
         self.change_context.setText(QtGui.QApplication.translate("Dialog", "Switch Work Area", None, QtGui.QApplication.UnicodeUTF8))
         self.hide_tasks.setText(QtGui.QApplication.translate("Dialog", "Show My Tasks Only", None, QtGui.QApplication.UnicodeUTF8))

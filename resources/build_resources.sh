@@ -1,11 +1,37 @@
 #!/usr/bin/env bash
 # 
-# Copyright (c) 2008 Shotgun Software, Inc
+# Copyright (c) 2013 Shotgun Software, Inc
 # ----------------------------------------------------
 
-echo "building user interfaces..."
-pyside-uic --from-imports dialog.ui > ../python/tk_multi_setcontext/ui/dialog.py
-pyside-uic --from-imports new_task.ui > ../python/tk_multi_setcontext/ui/new_task.py
+# The path to output all built .py files to: 
+UI_PYTHON_PATH=../python/tk_multi_setcontext/ui
 
+
+# Helper functions to build UI files
+function build_qt {
+    echo " > Building " $2
+    
+    # compile ui to python
+    $1 $2 > $UI_PYTHON_PATH/$3.py
+    
+    # replace PySide imports with tank.platform.qt and remove line containing Created by date
+    sed -i "" -e "s/from PySide import/from tank.platform.qt import/g" -e "/# Created:/d" $UI_PYTHON_PATH/$3.py
+}
+
+function build_ui {
+    build_qt "pyside-uic --from-imports" "$1.ui" "$1"
+}  
+
+function build_res {
+    build_qt "pyside-rcc" "$1.qrc" "$1_rc"
+}
+
+
+# build UI's:
+echo "building user interfaces..."
+build_ui dialog
+build_ui new_task
+
+# build resources
 echo "building resources..."
-pyside-rcc resources.qrc > ../python/tk_multi_setcontext/ui/resources_rc.py
+build_res resources
