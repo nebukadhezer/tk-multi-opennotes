@@ -49,6 +49,11 @@ class Ui_Dialog(object):
         self.gridLayout.addLayout(self.horizontalLayout_3, 1, 1, 1, 1)
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
+        self.refresh = QtGui.QPushButton(Dialog)
+        self.refresh.setObjectName("refresh")
+        self.horizontalLayout.addWidget(self.refresh)
+        spacerItem1 = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
+        self.horizontalLayout.addItem(spacerItem1)
         self.gridLayout.addLayout(self.horizontalLayout, 1, 0, 1, 1)
         self.verticalLayout.addLayout(self.gridLayout)
 
@@ -59,6 +64,7 @@ class Ui_Dialog(object):
         Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Change your Work Area", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("Dialog", "All open notes, linked to the current context. Latest changes on top.", None, QtGui.QApplication.UnicodeUTF8))
         self.change_context.setText(QtGui.QApplication.translate("Dialog", "reply", None, QtGui.QApplication.UnicodeUTF8))
+        self.refresh.setText(QtGui.QApplication.translate("Dialog", "refresh", None, QtGui.QApplication.UnicodeUTF8))
 
 from ..entity_browser import EntityBrowserWidget
 from ..task_browser import TaskBrowserWidget

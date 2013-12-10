@@ -32,6 +32,8 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
 
         sg_data = []
 
+        self._current_user = tank.util.get_shotgun_user(self._app.shotgun)
+        #print self._current_user
         notes = self._app.shotgun.find("Note", 
                                        [ ["project", "is", self._app.context.project], 
                                          ["note_links", "in", self._app.context.entity]], 
@@ -39,6 +41,7 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
                                          [{'field_name':'updated_at','direction':'desc'}]
                                        )
         userDict = dict()
+        userDict2 = dict()
         for note in notes:
             if 'user' in note:
                 if not note['user']['name'] in userDict:
@@ -46,19 +49,25 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
                     userDict[note['user']['name']].append(note)
                 else:
                     userDict[note['user']['name']].append(note)
-        
+                if not note['user']['name'] in userDict2:
+                    userDict2[note['user']['name']] = self._app.shotgun.find_one("HumanUser",[['id','is',note['user']['id']]], ['image'])
         sg_data.append(userDict)
             
         #resort and group the data 
 
-        return {"data": sg_data}
+        return {"data": sg_data,
+                "icons": userDict2}
 
 
     def process_result(self, result):
 
         if len(result.get("data")) == 0:
-            self.set_message("No matching items found!")
+            self.set_message("No notes found!")
             return
+        if result['icons']:
+            icons = result['icons']
+            print 'icons: %s' % icons
+        
         for user in result.get("data"):
             #print user
             for use in user:
@@ -77,12 +86,15 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
                                                       d.get("created_at"), 
                                                       d['sg_status_list'],
                                                       ", ".join(retTasks))
-                    print details
+                    #print details
                     i.set_details(details)
                     i.sg_data = d
-                    
-                #if d.get("image"):
-                #    i.set_thumbnail(d.get("image"))                
+                    image = icons[use]['image']
+                    print image
+                    print self._current_user['image']
+                    if image:
+                        i.set_thumbnail(image)
+                #            
 
         
         

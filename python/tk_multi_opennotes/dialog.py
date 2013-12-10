@@ -14,8 +14,15 @@ import sys
 import threading
 
 from tank.platform.qt import QtCore, QtGui
+
+thumbnail_widget = tank.platform.import_framework("tk-framework-widget", "thumbnail_widget")
+class ThumbnailWidget(thumbnail_widget.ThumbnailWidget):
+    pass
+
 from .ui.dialog import Ui_Dialog
 from .new_task import NewTaskDialog
+
+
 
 class AppDialog(QtGui.QWidget):
 

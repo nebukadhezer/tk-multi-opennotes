@@ -26,6 +26,7 @@ class SetContext(tank.platform.Application):
 
         # only launch the dialog once at startup
         # use tank object to store this flag
+        #oldContext = self.engine.context
         if not hasattr(tank, '_tk_multi_opennotes_shown'):
             # very first time we run this app
             tank._tk_multi_opennotes_shown = True
