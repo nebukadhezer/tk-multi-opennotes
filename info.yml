@@ -13,22 +13,10 @@
 # expected fields in the configuration file for this app
 configuration:
 
-    sg_entity_types:
-        type: list
-        description: "List of Shotgun Entity Types to include in the listings."
-        default_value: [Shot, Asset]
-        values:
-            type: shotgun_entity_type
-            
-    enable_create_tasks:
-        type: bool
-        description: "Controls whether new tasks can be created from the app."
-        default_value: True
-        
     launch_at_startup:
         type: bool
         description: A flag whether to launch this app's UI at startup.
-        default_value: false
+        default_value: true
         
 # the engines that this app can operate in:
 supported_engines: [tk-nuke, tk-maya, tk-motionbuilder, tk-3dsmax, tk-photoshop, tk-hiero]
@@ -37,8 +25,8 @@ supported_engines: [tk-nuke, tk-maya, tk-motionbuilder, tk-3dsmax, tk-photoshop,
 requires_shotgun_fields:
 
 # More verbose description of this item 
-display_name: "Set Work Area"
-description: "UI which lets a user choose a task that they want to work on."
+display_name: "open notes"
+description: "Shows you all notes linked to the context you are on can pop up if the context changed."
 
 # Required minimum versions for this item to run
 requires_shotgun_version:
