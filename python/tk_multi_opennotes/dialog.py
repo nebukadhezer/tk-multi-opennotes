@@ -57,11 +57,11 @@ class AppDialog(QtGui.QWidget):
 #             types_str += " & %s" % plural_types[-1]
 
         self.ui.left_browser.set_label("Overview")
-        self.ui.right_browser.set_label("Body")
+        self.ui.right_browser.set_label("Dialog")
 
         # refresh when the checkbox is clicked
-        self.ui.hide_tasks.toggled.connect( self.setup_entity_list )
-        self.ui.hide_tasks.toggled.connect( self.remember_checkbox )
+        #self.ui.hide_tasks.toggled.connect( self.setup_entity_list )
+        #self.ui.hide_tasks.toggled.connect( self.remember_checkbox )
 
 
         # load data from shotgun
@@ -70,14 +70,14 @@ class AppDialog(QtGui.QWidget):
 
         # remember state of checkbox
         # this qsettings stuff seems super flaky on different platforms
-        try:
-            # this qsettings stuff seems super flaky on different platforms
-            # - although setting is saved as an int, it can get loaded as either an
-            # int or a string, hence the double casting to int and then bool.
-            prev_hide_tasks = bool(int(self._settings.value("hide_tasks", True)))
-            self.ui.hide_tasks.setChecked(prev_hide_tasks)
-        except Exception, e:
-            self._app.log_warning("Cannot restore state of hide tasks checkbox: %s" % e)
+#         try:
+#             # this qsettings stuff seems super flaky on different platforms
+#             # - although setting is saved as an int, it can get loaded as either an
+#             # int or a string, hence the double casting to int and then bool.
+#             prev_hide_tasks = bool(int(self._settings.value("hide_tasks", True)))
+#             self.ui.hide_tasks.setChecked(prev_hide_tasks)
+#         except Exception, e:
+#             self._app.log_warning("Cannot restore state of hide tasks checkbox: %s" % e)
 
 
     ########################################################################################
@@ -106,18 +106,19 @@ class AppDialog(QtGui.QWidget):
 
 
     def remember_checkbox(self):
+        pass
         # remember setting - save value as an int as this
         # can be handled across all operating systems!
         # - on Windows & Linux, boolean & int settings are
         # returned as strings when queried!
-        settings_val = self.ui.hide_tasks.isChecked()
-        self._settings.setValue("hide_tasks", int(settings_val))
+        #settings_val = self.ui.hide_tasks.isChecked()
+        #self._settings.setValue("hide_tasks", int(settings_val))
 
     def setup_entity_list(self):
         self.ui.left_browser.clear()
         self.ui.right_browser.clear()
         d = {}
-        d["own_tasks_only"] = self.ui.hide_tasks.isChecked()
+        #d["own_tasks_only"] = self.ui.hide_tasks.isChecked()
         self.ui.left_browser.load(d)
 
     def setup_task_list(self):
@@ -129,7 +130,7 @@ class AppDialog(QtGui.QWidget):
 
         # pass in data to task retreiver
         d = {}
-        d["own_tasks_only"] = self.ui.hide_tasks.isChecked()
+        #d["own_tasks_only"] = self.ui.hide_tasks.isChecked()
         d["entity"] = curr_selection.sg_data
         # pass in the sg data dump for the entity to the task loader code
         self.ui.right_browser.load(d)

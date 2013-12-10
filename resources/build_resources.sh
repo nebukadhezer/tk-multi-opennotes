@@ -11,7 +11,7 @@
 # not expressly granted therein are reserved by Shotgun Software Inc.
 
 # The path to output all built .py files to: 
-UI_PYTHON_PATH=../python/tk_multi_setcontext/ui
+UI_PYTHON_PATH=../python/tk_multi_opennotes/ui
 
 
 # Helper functions to build UI files

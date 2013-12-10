@@ -20,13 +20,6 @@ class Ui_Dialog(object):
         self.label_3.setWordWrap(True)
         self.label_3.setObjectName("label_3")
         self.horizontalLayout_2.addWidget(self.label_3)
-        self.new_task = QtGui.QToolButton(Dialog)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(":/res/icon_Task.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.new_task.setIcon(icon)
-        self.new_task.setToolButtonStyle(QtCore.Qt.ToolButtonTextBesideIcon)
-        self.new_task.setObjectName("new_task")
-        self.horizontalLayout_2.addWidget(self.new_task)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
         self.gridLayout = QtGui.QGridLayout()
         self.gridLayout.setObjectName("gridLayout")
@@ -56,10 +49,6 @@ class Ui_Dialog(object):
         self.gridLayout.addLayout(self.horizontalLayout_3, 1, 1, 1, 1)
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.hide_tasks = QtGui.QCheckBox(Dialog)
-        self.hide_tasks.setChecked(True)
-        self.hide_tasks.setObjectName("hide_tasks")
-        self.horizontalLayout.addWidget(self.hide_tasks)
         self.gridLayout.addLayout(self.horizontalLayout, 1, 0, 1, 1)
         self.verticalLayout.addLayout(self.gridLayout)
 
@@ -68,11 +57,8 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Change your Work Area", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setText(QtGui.QApplication.translate("Dialog", "Below is a list of Shotgun Items and their associated Tasks.\n"
-"Double click a Task to set the current Work Area to point at it.", None, QtGui.QApplication.UnicodeUTF8))
-        self.new_task.setText(QtGui.QApplication.translate("Dialog", "Create New Task...", None, QtGui.QApplication.UnicodeUTF8))
-        self.change_context.setText(QtGui.QApplication.translate("Dialog", "Switch Work Area", None, QtGui.QApplication.UnicodeUTF8))
-        self.hide_tasks.setText(QtGui.QApplication.translate("Dialog", "Show My Tasks Only", None, QtGui.QApplication.UnicodeUTF8))
+        self.label_3.setText(QtGui.QApplication.translate("Dialog", "All open notes, linked to the current context. Latest changes on top.", None, QtGui.QApplication.UnicodeUTF8))
+        self.change_context.setText(QtGui.QApplication.translate("Dialog", "reply", None, QtGui.QApplication.UnicodeUTF8))
 
 from ..entity_browser import EntityBrowserWidget
 from ..task_browser import TaskBrowserWidget
