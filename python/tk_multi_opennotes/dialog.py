@@ -48,6 +48,7 @@ class AppDialog(QtGui.QWidget):
         self.ui.right_browser.set_message("Please select an item in the listing to the left.")
         self.ui.reply.clicked.connect( self.openReply )
         self.ui.refresh.clicked.connect( self.refresh )
+        self.ui.reply.hide()
 
     def openReply(self):
         
