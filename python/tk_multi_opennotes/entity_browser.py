@@ -31,9 +31,7 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
     def get_data(self, data):
 
         sg_data = []
-
         self._current_user = tank.util.get_shotgun_user(self._app.shotgun)
-        #print self._current_user
         notes = self._app.shotgun.find("Note", 
                                        [ ["project", "is", self._app.context.project], 
                                          ["note_links", "in", self._app.context.entity]], 
@@ -52,8 +50,6 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
                 if not note['user']['name'] in userDict2:
                     userDict2[note['user']['name']] = self._app.shotgun.find_one("HumanUser",[['id','is',note['user']['id']]], ['image'])
         sg_data.append(userDict)
-            
-        #resort and group the data 
 
         return {"data": sg_data,
                 "icons": userDict2}
@@ -66,10 +62,9 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
             return
         if result['icons']:
             icons = result['icons']
-            print 'icons: %s' % icons
+            #print 'icons: %s' % icons
         
         for user in result.get("data"):
-            #print user
             for use in user:
                  i = self.add_item(browser_widget.ListHeader)
                  i.set_title("Notes from %s" % (use))
@@ -86,15 +81,10 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
                                                       d.get("created_at"), 
                                                       d['sg_status_list'],
                                                       ", ".join(retTasks))
-                    #print details
                     i.set_details(details)
                     i.sg_data = d
                     image = icons[use]['image']
-                    print image
-                    print self._current_user['image']
                     if image:
                         i.set_thumbnail(image)
-                #            
-
-        
-        
+                        d['user']['image'] = image
+                        i.sg_data = d

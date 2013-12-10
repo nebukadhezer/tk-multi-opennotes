@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'dialog.ui'
 #
-#      by: pyside-uic 0.2.13 running on PySide 1.1.0
+#      by: pyside-uic 0.2.14 running on PySide 1.1.2
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -11,7 +11,7 @@ from tank.platform.qt import QtCore, QtGui
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(797, 546)
+        Dialog.resize(1058, 732)
         self.verticalLayout = QtGui.QVBoxLayout(Dialog)
         self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout_2 = QtGui.QHBoxLayout()
@@ -43,9 +43,9 @@ class Ui_Dialog(object):
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         spacerItem = QtGui.QSpacerItem(40, 20, QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem)
-        self.change_context = QtGui.QPushButton(Dialog)
-        self.change_context.setObjectName("change_context")
-        self.horizontalLayout_3.addWidget(self.change_context)
+        self.reply = QtGui.QPushButton(Dialog)
+        self.reply.setObjectName("reply")
+        self.horizontalLayout_3.addWidget(self.reply)
         self.gridLayout.addLayout(self.horizontalLayout_3, 1, 1, 1, 1)
         self.horizontalLayout = QtGui.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
@@ -63,7 +63,7 @@ class Ui_Dialog(object):
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Change your Work Area", None, QtGui.QApplication.UnicodeUTF8))
         self.label_3.setText(QtGui.QApplication.translate("Dialog", "All open notes, linked to the current context. Latest changes on top.", None, QtGui.QApplication.UnicodeUTF8))
-        self.change_context.setText(QtGui.QApplication.translate("Dialog", "reply", None, QtGui.QApplication.UnicodeUTF8))
+        self.reply.setText(QtGui.QApplication.translate("Dialog", "reply", None, QtGui.QApplication.UnicodeUTF8))
         self.refresh.setText(QtGui.QApplication.translate("Dialog", "refresh", None, QtGui.QApplication.UnicodeUTF8))
 
 from ..entity_browser import EntityBrowserWidget

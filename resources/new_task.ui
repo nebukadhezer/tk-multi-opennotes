@@ -6,18 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>676</width>
-    <height>415</height>
+    <width>753</width>
+    <height>328</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0" colspan="2">
+   <item row="0" column="0">
     <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Reply&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;Add a thumbnail if you want or add a path to a local file.&lt;br/&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:600;&quot;&gt;Create Note/Reply&lt;/span&gt;&lt;br/&gt;&lt;br/&gt;Add a thumbnail if you want or add a path to a local file to be uploaded.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -25,85 +25,159 @@
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>Attachment</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QLineEdit" name="attachment"/>
-   </item>
-   <item row="2" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout_6">
-     <property name="spacing">
-      <number>0</number>
-     </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
      <item>
-      <widget class="QFrame" name="thumbnail_frame">
-       <property name="styleSheet">
-        <string notr="true">#thumbnail_frame {
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Subject</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="subject"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="font">
+            <font>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Attachment</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="attachment"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QPlainTextEdit" name="body">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>474</width>
+           <height>133</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Fixed</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>5</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QFrame" name="thumbnail_frame">
+           <property name="styleSheet">
+            <string notr="true">#thumbnail_frame {
 border-style: solid;
 border-color: rgb(32,32,32);
 border-width: 1px;
 border-radius: 3px;
 background: rgb(117,117,117);
 }</string>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
-        <property name="margin">
-         <number>0</number>
-        </property>
-        <item>
-         <widget class="ThumbnailWidget" name="thumbnail_widget" native="true">
-          <property name="minimumSize">
-           <size>
-            <width>200</width>
-            <height>130</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>200</width>
-            <height>130</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true"/>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_4">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>0</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <property name="margin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="ThumbnailWidget" name="thumbnail_widget" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>200</width>
+                <height>130</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>200</width>
+                <height>130</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
      </item>
     </layout>
    </item>
-   <item row="3" column="0" colspan="2">
+   <item row="2" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -114,17 +188,22 @@ background: rgb(117,117,117);
     </widget>
    </item>
   </layout>
+  <zorder>label_2</zorder>
+  <zorder>attachment</zorder>
   <zorder>label_3</zorder>
   <zorder>buttonBox</zorder>
-  <zorder>layoutWidget</zorder>
   <zorder>thumbnail_widget</zorder>
   <zorder>thumbnail_frame</zorder>
+  <zorder>body</zorder>
+  <zorder>label_4</zorder>
+  <zorder>subject</zorder>
+  <zorder>verticalSpacer</zorder>
  </widget>
  <customwidgets>
   <customwidget>
    <class>ThumbnailWidget</class>
    <extends>QWidget</extends>
-   <header>..publish_details_form</header>
+   <header>..dialog</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

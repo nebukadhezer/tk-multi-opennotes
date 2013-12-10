@@ -41,52 +41,36 @@ class AppDialog(QtGui.QWidget):
         self.ui.right_browser.set_app(self._app)
 
         self.ui.left_browser.selection_changed.connect( self.setup_task_list )
-        #self.ui.right_browser.action_requested.connect( self.set_context )
-        #self.ui.change_context.clicked.connect( self.set_context )
-
-        #self.toggle_load_button_enabled()
-        #self.ui.left_browser.selection_changed.connect( self.toggle_load_button_enabled )
-        #self.ui.right_browser.selection_changed.connect( self.toggle_load_button_enabled )
-
-        # create
-        #types_to_load = self._app.get_setting("sg_entity_types", [])
-
-        # now resolve the entity types into display names
-        #types_nice_names = [ tank.util.get_entity_type_display_name(self._app.tank, x) for x in types_to_load ]
-
-#         plural_types = [ "%ss" % x for x in types_nice_names] # no fanciness (sheep, box, nucleus etc)
-#         if len(plural_types) == 1:
-#             # "Shots"
-#             types_str = plural_types[0]
-#         else:
-#             # "Shots, Assets & Sequences"
-#             types_str = ", ".join(plural_types[:-1])
-#             types_str += " & %s" % plural_types[-1]
-
         self.ui.left_browser.set_label("Overview")
         self.ui.right_browser.set_label("Dialog")
 
-        # refresh when the checkbox is clicked
-        #self.ui.hide_tasks.toggled.connect( self.setup_entity_list )
-        #self.ui.hide_tasks.toggled.connect( self.remember_checkbox )
-
-
-        # load data from shotgun
         self.setup_entity_list()
         self.ui.right_browser.set_message("Please select an item in the listing to the left.")
+        self.ui.reply.clicked.connect( self.openReply )
+        self.ui.refresh.clicked.connect( self.refresh )
 
-        # remember state of checkbox
-        # this qsettings stuff seems super flaky on different platforms
-#         try:
-#             # this qsettings stuff seems super flaky on different platforms
-#             # - although setting is saved as an int, it can get loaded as either an
-#             # int or a string, hence the double casting to int and then bool.
-#             prev_hide_tasks = bool(int(self._settings.value("hide_tasks", True)))
-#             self.ui.hide_tasks.setChecked(prev_hide_tasks)
-#         except Exception, e:
-#             self._app.log_warning("Cannot restore state of hide tasks checkbox: %s" % e)
+    def openReply(self):
+        
+        
+        curr_selection = self.ui.left_browser.get_selected_item()
+        if curr_selection is None:
+                QtGui.QMessageBox.warning(self,
+                                          "Please select an Entity!",
+                                          "Please select an Entity that you want to add a Task to.")
+                return
+        reply = NewTaskDialog(self._app, curr_selection.sg_data, self)
+        # need to keep the reference alive otherwise the window is destroyed
+        if reply.exec_() == QtGui.QDialog.Accepted:
+            # do it!
+            pass
+            print 'yes'
+            #task_id = new_task.create_task()
 
+            # refresh - in case they cancel the context set, the dialog is up to date.
+            #self.setup_task_list()
 
+            # and set the context to point here!
+            #self._set_context(task_id)
     ########################################################################################
     # make sure we trap when the dialog is closed so that we can shut down
     # our threads. Maya does not do proper cleanup on exit.
@@ -101,25 +85,8 @@ class AppDialog(QtGui.QWidget):
     # basic business logic
 
 
-    def toggle_load_button_enabled(self):
-        """
-        Control the enabled state of the load button
-        """
-        curr_selection = self.ui.right_browser.get_selected_item()
-        if curr_selection is None:
-            self.ui.change_context.setEnabled(False)
-        else:
-            self.ui.change_context.setEnabled(True)
-
-
-    def remember_checkbox(self):
-        pass
-        # remember setting - save value as an int as this
-        # can be handled across all operating systems!
-        # - on Windows & Linux, boolean & int settings are
-        # returned as strings when queried!
-        #settings_val = self.ui.hide_tasks.isChecked()
-        #self._settings.setValue("hide_tasks", int(settings_val))
+    def refresh(self):
+        self.setup_entity_list()
 
     def setup_entity_list(self):
         self.ui.left_browser.clear()

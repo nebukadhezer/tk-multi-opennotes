@@ -19,15 +19,16 @@ from .ui.new_task import Ui_NewTask
 class NewTaskDialog(QtGui.QDialog):
 
     
-    def __init__(self, app, entity, parent):
+    def __init__(self, app, data, parent, createMode = False ):
         QtGui.QDialog.__init__(self, parent)
         self._app = app
         # set up the UI
         self.ui = Ui_NewTask() 
         self.ui.setupUi(self)
         
-        self._entity = entity
+        self._data = data
         
+        '''
         # populate entity name
         entity_name = "%s %s" % (self._entity["type"], self._entity["code"])
         self.ui.entity.setText(entity_name)
@@ -62,7 +63,7 @@ class NewTaskDialog(QtGui.QDialog):
             self.ui.task_name.setText(step_name)
         
         
-    def create_task(self):
+    def create_note(self):
         
         # creates a new task. returns the task id or none on failure
         
@@ -88,3 +89,4 @@ class NewTaskDialog(QtGui.QDialog):
             pass
         
         return e["id"]
+        '''
