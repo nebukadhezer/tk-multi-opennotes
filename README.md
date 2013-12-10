@@ -1,5 +1,6 @@
 ## Documentation
-a read only open notes app.
+an open notes app for shotgun...
+Should work with most apps...
 Todo List: 
 -see attachments
 -add files
