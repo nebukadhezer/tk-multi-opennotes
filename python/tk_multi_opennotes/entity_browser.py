@@ -12,7 +12,7 @@ import tank
 import os
 import sys
 import threading
-
+from datetime import datetime
 from tank.platform.qt import QtCore, QtGui
 
 browser_widget = tank.platform.import_framework("tk-framework-widget", "browser_widget")
@@ -26,6 +26,7 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
         # only load this once!
         self._current_user = None
         self._current_user_loaded = False
+        self._initTime = datetime.now()
         
 
     def get_data(self, data):
@@ -52,7 +53,8 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
         sg_data.append(userDict)
 
         return {"data": sg_data,
-                "icons": userDict2}
+                "icons": userDict2,
+                "retTime": datetime.now()}
 
 
     def process_result(self, result):
@@ -82,6 +84,7 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
                                                       d['sg_status_list'],
                                                       ", ".join(retTasks))
                     i.set_details(details)
+                    d['retTime'] = result['retTime']
                     i.sg_data = d
                     image = icons[use]['image']
                     if image:
