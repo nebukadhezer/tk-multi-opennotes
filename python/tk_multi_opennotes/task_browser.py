@@ -50,9 +50,10 @@ class TaskBrowserWidget(browser_widget.BrowserWidget):
         details = []
         details.append("%s" % data.get("content", ""))
         i.set_details("<br>".join(details))
-        image = data['user']['image']
-        if image:
-            i.set_thumbnail(image)
+        if 'image' in data['user']:
+            image = data['user']['image']
+            if image:
+                i.set_thumbnail(image)
     
         if datetime.now()-data['retTime'] > timedelta(seconds=20):
              newReply = self._app.shotgun.find_one(data['type'],
