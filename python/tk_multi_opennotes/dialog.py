@@ -48,10 +48,32 @@ class AppDialog(QtGui.QWidget):
         self.ui.right_browser.set_message("Please select an item in the listing to the left.")
         self.ui.reply.clicked.connect( self.openReply )
         self.ui.refresh.clicked.connect( self.refresh )
+        self.ui.openInSg.clicked.connect( self.openUrl )
         self.ui.reply.hide()
-
-    def openReply(self):
+    
+    def makeUrl(self,data):
+        '''
+        super hooky method to create a shotgun url...
+        need to find out how this is really done
+        '''
         
+        base = u'%s/page/888/#%s_%s_%s' % (self._app.shotgun.base_url,
+                                  data.sg_data['type'],
+                                  data.sg_data['id'],
+                                  data.sg_data['subject'])
+         
+        return base
+
+    def openUrl(self):
+        curr_selection = self.ui.left_browser.get_selected_item()
+        if curr_selection is None:
+            QtGui.QMessageBox.warning(self,
+                                      "Please select an Entity!",
+                                      "Please select an Entity that you want to add a Task to.")
+            return
+        QtGui.QDesktopServices.openUrl(self.makeUrl(curr_selection))
+        
+    def openReply(self):
         
         curr_selection = self.ui.left_browser.get_selected_item()
         if curr_selection is None:

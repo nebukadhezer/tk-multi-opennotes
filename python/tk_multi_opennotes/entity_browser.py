@@ -79,10 +79,16 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
                         for task in tasks:
                             if 'name' in task:
                                 retTasks.append(task['name'])
-                    details = "<b>%s</b><br>from %s<br>status: %s<br>tasks: %s" % (d.get("subject"), 
-                                                      d.get("created_at"), 
-                                                      d['sg_status_list'],
-                                                      ", ".join(retTasks))
+                    if self._app.context.task['name'] in retTasks:
+                        details = "<FONT COLOR='#65D552'><b>%s</b><br>from %s<br>status: %s<br>tasks: <b>%s</b></FONT COLOR='#65D552'>" % (d.get("subject"), 
+                                                          d.get("created_at"), 
+                                                          d.get('sg_status_list'),
+                                                          ", ".join(retTasks))
+                    else:
+                        details = "<b>%s</b><br>from %s<br>status: %s<br>tasks: <b>%s</b>" % (d.get("subject"), 
+                                                          d.get("created_at"), 
+                                                          d.get('sg_status_list'),
+                                                          ", ".join(retTasks))
                     i.set_details(details)
                     d['retTime'] = result['retTime']
                     i.sg_data = d
