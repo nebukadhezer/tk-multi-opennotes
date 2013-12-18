@@ -19,7 +19,7 @@
      <item>
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>All open notes, linked to the current context. Latest changes on top.</string>
+        <string>All open notes, linked to the current context. Latest changes on top. Green are the Notes linkes to the current Task.</string>
        </property>
        <property name="wordWrap">
         <bool>true</bool>
@@ -31,6 +31,9 @@
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
+       <property name="sizeType">
+        <enum>QSizePolicy::Fixed</enum>
+       </property>
        <property name="sizeHint" stdset="0">
         <size>
          <width>40</width>
@@ -41,6 +44,12 @@
      </item>
      <item>
       <widget class="QPushButton" name="openInSg">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>open in SG</string>
        </property>
