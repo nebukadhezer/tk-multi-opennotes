@@ -64,7 +64,8 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
             return
         contextTask = self._app.context.task
         if not contextTask:
-            self.set_message("NO TASK PRESENT IN THE CONTEXT THIS IS BAD PLEASE US THE SETCONTEXT APPS")
+            temp = self.add_item(browser_widget.ListHeader)
+            temp.set_title("<FONT COLOR='#FF0000'>NO TASK PRESENT IN THE CONTEXT THIS IS BAD PLEASE US THE SETCONTEXT APPS</FONT COLOR='#FF0000'>")
         if result['icons']:
             icons = result['icons']
             #print 'icons: %s' % icons
