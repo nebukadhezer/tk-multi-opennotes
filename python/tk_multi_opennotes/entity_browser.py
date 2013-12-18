@@ -62,6 +62,9 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
         if len(result.get("data")) == 0:
             self.set_message("No notes found!")
             return
+        contextTask = self._app.context.task
+        if not contextTask:
+            self.set_message("NO TASK PRESENT IN THE CONTEXT THIS IS BAD PLEASE US THE SETCONTEXT APPS")
         if result['icons']:
             icons = result['icons']
             #print 'icons: %s' % icons
@@ -79,16 +82,23 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
                         for task in tasks:
                             if 'name' in task:
                                 retTasks.append(task['name'])
-                    if self._app.context.task['name'] in retTasks:
-                        details = "<FONT COLOR='#65D552'><b>%s</b><br>from %s<br>status: %s<br>tasks: <b>%s</b></FONT COLOR='#65D552'>" % (d.get("subject"), 
-                                                          d.get("created_at"), 
-                                                          d.get('sg_status_list'),
-                                                          ", ".join(retTasks))
+                    if contextTask:
+                        if self._app.context.task['name'] in retTasks:
+                            details = "<FONT COLOR='#65D552'><b>%s</b><br>from %s<br>status: %s<br>tasks: <b>%s</b></FONT COLOR='#65D552'>" % (d.get("subject"), 
+                                                              d.get("created_at"), 
+                                                              d.get('sg_status_list'),
+                                                              ", ".join(retTasks))
+                        else:
+                            details = "<b>%s</b><br>from %s<br>status: %s<br>tasks: <b>%s</b>" % (d.get("subject"), 
+                                                              d.get("created_at"), 
+                                                              d.get('sg_status_list'),
+                                                              ", ".join(retTasks))
                     else:
                         details = "<b>%s</b><br>from %s<br>status: %s<br>tasks: <b>%s</b>" % (d.get("subject"), 
                                                           d.get("created_at"), 
                                                           d.get('sg_status_list'),
                                                           ", ".join(retTasks))
+                        
                     i.set_details(details)
                     d['retTime'] = result['retTime']
                     i.sg_data = d
