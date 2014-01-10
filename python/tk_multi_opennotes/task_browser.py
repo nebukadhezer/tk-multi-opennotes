@@ -54,6 +54,8 @@ class TaskBrowserWidget(browser_widget.BrowserWidget):
             image = data['user']['image']
             if image:
                 i.set_thumbnail(image)
+        else:
+            image = None
     
         if datetime.now()-data['retTime'] > timedelta(seconds=20):
              newReply = self._app.shotgun.find_one(data['type'],
@@ -65,6 +67,7 @@ class TaskBrowserWidget(browser_widget.BrowserWidget):
                  
         i.sg_data = data
         replies = dict()
+        attach = dict()
         sortList = list()
         if "replies" in data:
             if data["replies"]:
@@ -75,17 +78,38 @@ class TaskBrowserWidget(browser_widget.BrowserWidget):
                                                              #[{'field_name':'created_at','direction':'asc'}])
                     replies[fullRepData['created_at']]= fullRepData
                     sortList.append(fullRepData['created_at'])
+        if "attachments" in data:
+            if data["attachments"]:
+                for att in data["attachments"]:
+                    attachData = self._app.shotgun.find_one(att['type'],
+                                                             [['id','is',att['id']]],
+                                                             ['created_at','this_file','file_extension', 'filename','image'])
+                                                             #[{'field_name':'created_at','direction':'asc'}])
+                    attach[attachData['created_at']]= attachData
+                    sortList.append(attachData['created_at'])
         sortList.sort()
+        
+        print sortList
         if sortList:
             for i in sortList:
-                fullRepData = replies[i]
-                repHead = self.add_item(browser_widget.ListHeader)
-                repHead.set_title("%s wrote on %s" % (fullRepData['user']['name'],fullRepData['created_at']))
-                repBod = self.add_item(browser_widget.ListItem)
-                repBod.set_details("%s" % fullRepData['content'])
-                if fullRepData['user']['id'] == data['user']['id']:
-                    repBod.set_thumbnail(image)
-                else:
-                    image2 = self._app.shotgun.find_one("HumanUser",[['id','is',fullRepData['user']['id']]], ['image'])
-                    if image2['image']:
-                        repBod.set_thumbnail(image2['image'])
+                if i in replies:
+                    fullRepData = replies[i]
+                    repHead = self.add_item(browser_widget.ListHeader)
+                    repHead.set_title("%s wrote on %s" % (fullRepData['user']['name'],fullRepData['created_at']))
+                    repBod = self.add_item(browser_widget.ListItem)
+                    repBod.set_details("%s" % fullRepData['content'])
+                    if fullRepData['user']['id'] == data['user']['id']:
+                        if image:
+                            repBod.set_thumbnail(image)
+                    else:
+                        image2 = self._app.shotgun.find_one("HumanUser",[['id','is',fullRepData['user']['id']]], ['image'])
+                        if image2['image']:
+                            repBod.set_thumbnail(image2['image'])
+                elif i in attach:
+                    fullAttData = attach[i]
+                    #repHead = self.add_item(browser_widget.ListHeader)
+                    #repHead.set_title("%s wrote on %s" % (fullRepData['user']['name'],fullRepData['created_at']))
+                    attBod = self.add_item(browser_widget.ListItem)
+                    attBod.set_details("<i>Attachment:\n%s</i>" % fullAttData['filename'])
+                    if fullAttData['image']:
+                        attBod.set_thumbnail(fullAttData['image'])

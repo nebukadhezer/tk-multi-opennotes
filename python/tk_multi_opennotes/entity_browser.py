@@ -36,7 +36,7 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
         notes = self._app.shotgun.find("Note", 
                                        [ ["project", "is", self._app.context.project], 
                                          ["note_links", "in", self._app.context.entity]], 
-                                         ["subject","sg_status_list","tasks","note_links","type","user","created_at","content","replies"],
+                                         ["subject","sg_status_list","tasks","note_links","type","user","created_at","content","replies","attachments"],
                                          [{'field_name':'updated_at','direction':'desc'}]
                                        )
         userDict = dict()
