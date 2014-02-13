@@ -31,53 +31,29 @@ class TaskBrowserWidget(browser_widget.BrowserWidget):
 
     def get_data(self, data):
         
-        self._current_data = data
         output = {}
-        output["sgData"] = data["entity"]
+        
+        data = data["entity"]
 
-        
-        return output
-                    
-    def process_result(self, result):
-        
-        data = result["sgData"]
-        entity_str = "%s wrote on %s" % (data["user"]["name"], data.get("created_at", "Unknonwn"))
-
-        t = self.add_item(browser_widget.ListHeader)
-        t.set_title("%s" % entity_str)
-        i = self.add_item(browser_widget.ListItem)
-        
-        details = []
-        details.append("%s" % data.get("content", ""))
-        i.set_details("<br>".join(details))
-        if 'image' in data['user']:
-            image = data['user']['image']
-            if image:
-                i.set_thumbnail(image)
-        else:
-            image = None
-    
-        if datetime.now()-data['retTime'] > timedelta(seconds=20):
-             newReply = self._app.shotgun.find_one(data['type'],
-                                                   [['id','is',data['id']]],
-                                                   ['replies'])
-                                                   #[{'field_name':'created_at','direction':'desc'}])
-             if newReply:
-                 data['replies']= newReply['replies']
-                 
-        i.sg_data = data
+        ### Todo if the timedelta is older than a minute requery for replies and attachments
+        ### although the refresh button does the job already
+#         newReply = self._app.shotgun.find_one(data['type'],
+#                                                [['id','is',data['id']]],
+#                                                ['replies'])
+#         data['replies']= newReply['replies']
         replies = dict()
         attach = dict()
         sortList = list()
+        
         if "replies" in data:
             if data["replies"]:
                 for rep in data["replies"]:
                     fullRepData = self._app.shotgun.find_one(rep['type'],
                                                              [['id','is',rep['id']]],
                                                              ['user','created_at','content'])
-                                                             #[{'field_name':'created_at','direction':'asc'}])
                     replies[fullRepData['created_at']]= fullRepData
                     sortList.append(fullRepData['created_at'])
+                    
         if "attachments" in data:
             if data["attachments"]:
                 for att in data["attachments"]:
@@ -87,28 +63,50 @@ class TaskBrowserWidget(browser_widget.BrowserWidget):
                                                              #[{'field_name':'created_at','direction':'asc'}])
                     attach[attachData['created_at']]= attachData
                     sortList.append(attachData['created_at'])
+
         sortList.sort()
         
-        print sortList
+        output['data'] = data
+        output['replies'] = replies
+        output['attach'] = attach
+        output['sortList'] = sortList
+        
+        return output
+                    
+    def process_result(self, result):
+        
+        data = result['data']
+        replies = result['replies']
+        attach = result['attach']
+        sortList = result['sortList']
+        
+        start = self.add_item(browser_widget.ListHeader)
+        start.set_title("%s wrote on %s" % (data["user"]["name"], data.get("created_at", "Unknonwn")))
+        body = self.add_item(browser_widget.ListItem)
+        body.set_details("%s" % data['content'])
+        image = data['user']['image']
+        if image:
+            body.set_thumbnail(image)
         if sortList:
             for i in sortList:
                 if i in replies:
                     fullRepData = replies[i]
                     repHead = self.add_item(browser_widget.ListHeader)
                     repHead.set_title("%s wrote on %s" % (fullRepData['user']['name'],fullRepData['created_at']))
+
                     repBod = self.add_item(browser_widget.ListItem)
                     repBod.set_details("%s" % fullRepData['content'])
+                    
                     if fullRepData['user']['id'] == data['user']['id']:
                         if image:
                             repBod.set_thumbnail(image)
                     else:
-                        image2 = self._app.shotgun.find_one("HumanUser",[['id','is',fullRepData['user']['id']]], ['image'])
-                        if image2['image']:
-                            repBod.set_thumbnail(image2['image'])
+                        repImage = self._app.shotgun.find_one("HumanUser",[['id','is',fullRepData['user']['id']]], ['image'])
+                        if repImage['image']:
+                            repBod.set_thumbnail(repImage['image'])
+
                 elif i in attach:
                     fullAttData = attach[i]
-                    #repHead = self.add_item(browser_widget.ListHeader)
-                    #repHead.set_title("%s wrote on %s" % (fullRepData['user']['name'],fullRepData['created_at']))
                     attBod = self.add_item(browser_widget.ListItem)
                     attBod.set_details("<i>Attachment:\n%s</i>" % fullAttData['filename'])
                     if fullAttData['image']:

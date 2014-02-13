@@ -31,7 +31,6 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
 
     def get_data(self, data):
 
-        sg_data = []
         self._current_user = tank.util.get_shotgun_user(self._app.shotgun)
         notes = self._app.shotgun.find("Note", 
                                        [ ["project", "is", self._app.context.project], 
@@ -40,22 +39,15 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
                                          [{'field_name':'updated_at','direction':'desc'}]
                                        )
         userDict = dict()
-        userDict2 = dict()
+
         for note in notes:
             if 'user' in note:
                 if not note['user']['name'] in userDict:
-                    userDict[note['user']['name']] = list()
-                    userDict[note['user']['name']].append(note)
-                else:
-                    userDict[note['user']['name']].append(note)
-                if not note['user']['name'] in userDict2:
-                    userDict2[note['user']['name']] = self._app.shotgun.find_one("HumanUser",[['id','is',note['user']['id']]], ['image'])
-        sg_data.append(userDict)
+                    userDict[note['user']['name']] = self._app.shotgun.find_one("HumanUser",[['id','is',note['user']['id']]], ['image'])
 
-        return {"data": sg_data,
-                "icons": userDict2,
-                "retTime": datetime.now()}
-
+        return {"data": notes,
+                "users": userDict,
+                "curTime": datetime.now()}
 
     def process_result(self, result):
 
@@ -66,45 +58,57 @@ class EntityBrowserWidget(browser_widget.BrowserWidget):
         if not contextTask:
             temp = self.add_item(browser_widget.ListHeader)
             temp.set_title("<FONT COLOR='#FF0000'>NO TASK PRESENT IN THE CONTEXT THIS IS BAD PLEASE US THE SETCONTEXT APPS</FONT COLOR='#FF0000'>")
-        if result['icons']:
-            icons = result['icons']
-            #print 'icons: %s' % icons
-        
-        for user in result.get("data"):
-            for use in user:
-                 i = self.add_item(browser_widget.ListHeader)
-                 i.set_title("Notes from %s" % (use))
-                 for d in user[use]:
-                    i = self.add_item(browser_widget.ListItem)
-                    ##prep tasks for print
-                    if 'tasks' in d:
-                        tasks = d['tasks']
-                        retTasks = list()
-                        for task in tasks:
-                            if 'name' in task:
-                                retTasks.append(task['name'])
-                    if contextTask:
-                        if self._app.context.task['name'] in retTasks:
-                            details = "<FONT COLOR='#65D552'><b>%s</b><br>from %s<br>status: %s<br>tasks: <b>%s</b></FONT COLOR='#65D552'>" % (d.get("subject"), 
-                                                              d.get("created_at"), 
-                                                              d.get('sg_status_list'),
-                                                              ", ".join(retTasks))
-                        else:
-                            details = "<b>%s</b><br>from %s<br>status: %s<br>tasks: <b>%s</b>" % (d.get("subject"), 
-                                                              d.get("created_at"), 
-                                                              d.get('sg_status_list'),
-                                                              ", ".join(retTasks))
-                    else:
-                        details = "<b>%s</b><br>from %s<br>status: %s<br>tasks: <b>%s</b>" % (d.get("subject"), 
-                                                          d.get("created_at"), 
-                                                          d.get('sg_status_list'),
-                                                          ", ".join(retTasks))
-                        
-                    i.set_details(details)
-                    d['retTime'] = result['retTime']
-                    i.sg_data = d
-                    image = icons[use]['image']
-                    if image:
-                        i.set_thumbnail(image)
-                        d['user']['image'] = image
-                        i.sg_data = d
+        if result['users']:
+            icons = result['users']
+
+        for e,note in enumerate(result.get("data")):
+            if e == 0:
+                userBanner = self.add_item(browser_widget.ListHeader)
+                userBanner.set_title("Notes from %s" % (note['user']['name']))
+                self.setData(note, result, contextTask)
+                currUser = note['user']['name']
+            else:
+                if note['user']['name'] == currUser:
+                    self.setData(note, result, contextTask)
+                else:
+                    userBanner = self.add_item(browser_widget.ListHeader)
+                    userBanner.set_title("Notes from %s" % (note['user']['name']))
+                    self.setData(note, result, contextTask)
+                    currUser = note['user']['name']
+                    
+    def setData(self,note,result,contextTask):
+        overview = self.add_item(browser_widget.ListItem)
+        image = result['users'][note['user']['name']]['image']
+        if 'tasks' in note:
+            tasks = note['tasks']
+            retTasks = list()
+            for task in tasks:
+                if 'name' in task:
+                    retTasks.append(task['name'])
+        if contextTask:
+            if self._app.context.task['name'] in retTasks:
+                details = "<FONT COLOR='#65D552'><b>%s</b><br>from %s<br>status: %s<br>tasks: <b>%s</b></FONT COLOR='#65D552'>" % (note.get("subject"), 
+                                                  note.get("created_at"), 
+                                                  note.get('sg_status_list'),
+                                                  ", ".join(retTasks))
+            else:
+                details = "<b>%s</b><br>from %s<br>status: %s<br>tasks: <b>%s</b>" % (note.get("subject"), 
+                                                  note.get("created_at"), 
+                                                  note.get('sg_status_list'),
+                                                  ", ".join(retTasks))
+        else:
+            details = "<b>%s</b><br>from %s<br>status: %s<br>tasks: <b>%s</b>" % (note.get("subject"), 
+                                              note.get("created_at"), 
+                                              note.get('sg_status_list'),
+                                              ", ".join(retTasks))
+                
+        overview.set_details(details)
+        note['curTime'] = result['curTime']
+        overview.sg_data = note
+        if image:
+            overview.set_thumbnail(image)
+            note['user']['image'] = image
+            overview.sg_data = note
+        else:
+            note['user']['image'] = None
+            overview.sg_data = note
